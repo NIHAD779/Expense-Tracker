@@ -1,10 +1,15 @@
 import React from 'react'
-
+import Form from './components/Form'
+import Graph from './components/Graph'
 const App = () => {
   return (
-    <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
+    <div className='mx-20'>
+      <header className='text-center bg-slate-500 my-10 text-[50px]'> Expense Tracker</header>
+      <div className='flex justify-evenly '>
+        <Graph/>
+        <Form/>
+      </div>
+    </div>
 
   )
 }
