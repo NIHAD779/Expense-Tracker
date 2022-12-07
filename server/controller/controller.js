@@ -1,7 +1,7 @@
 const model = require('../models/model')
 async function create_catagories(req,res){
     const Create = new model.Categories({
-        type:"Nihad",
+        type:"Shanu",
         color:'#1F3B5C'
     }) 
 
@@ -38,10 +38,18 @@ async function create_Transaction(req, res){
 
 }
 
+async function get_Transaction(req,res){
+    let data = await model.Transaction.find({});
+    return res.json(data)
+
+
+}
+
 
 
 module.exports={
     create_catagories,
     get_Categories,
-    create_Transaction
+    create_Transaction,
+    get_Transaction
 }
