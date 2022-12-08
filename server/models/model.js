@@ -19,7 +19,6 @@ const Categories = mongoose.model('categories',categories_model)
 const Transaction = mongoose.model('transaction',transaction_model)
 
 
-exports.default = Transaction;
 module.exports={
     Categories,Transaction
 }

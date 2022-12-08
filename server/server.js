@@ -11,7 +11,10 @@ const con = require('./db/connection')
 // use middleware
 
 // using routes
+app.use(cors)
+app.use(express.json());
 app.use(require('./Routes/route'));
+
 
 con.then(db =>{
     if(!db) return process.exit(1);
