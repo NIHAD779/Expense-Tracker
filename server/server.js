@@ -4,6 +4,7 @@ const cors = require('cors');
 
 require('dotenv').config({path:"./config.env"});
 const port = process.env.PORT||5000;
+app.use(express.json());
 
 // mongodb connection
 const con = require('./db/connection')
@@ -11,8 +12,7 @@ const con = require('./db/connection')
 // use middleware
 
 // using routes
-app.use(cors)
-app.use(express.json());
+app.use(cors())
 app.use(require('./Routes/route'));
 
 

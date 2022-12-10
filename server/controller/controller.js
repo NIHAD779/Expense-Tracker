@@ -1,12 +1,20 @@
 const model = require('../models/model')
 async function create_catagories(req,res){
-    const Create = new model.Categories({
-        type:"investment",
-        color:'blue'
-    }) 
+    if(!req.body) return res.status(400).json("Post HTTP Data not Provided");
+    let {type, color} = req.body;
+    // const Create = new model.Categories({
+    //     // type:"investment",
+    //     // color:'blue'        
+    // })
+    const create = await new model.Categories(
+        {
+            type,
+            color
+        }
+    );
 
-    await Create.save(function(err){
-        if(!err) return res.json(Create);
+    create.save(function(err){
+        if(!err) return res.json(create);
         return res.status(400).json({message:`Error in  creating categories ${err}`});
     });
 }
@@ -65,10 +73,10 @@ async function get_labels(req,res){
             $unwind: "$categories_info"
         }
     ]).then(result =>{
-        let data = result.map(v=> Object.assign({},{_id:v.id,name:v.name,type:v.type,amount:v.amount,color:v.categories_info.color}))
+        let data = result.map(v=> Object.assign({},{_id:v._id,name:v.name,type:v.type,amount:v.amount,color:v.categories_info.color}))
         res.json(data);
     }).catch(error =>{
-        console.log(error)
+        // console.log(error)
         res.status(400).json("Lookup collection error")
     })
 }

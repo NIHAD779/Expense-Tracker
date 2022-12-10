@@ -1,34 +1,25 @@
 import React from "react";
 import { default as api } from "../store/apiSlice";
-const obj = [
-  {
-    type: "Savings",
-    color: "#f9c74f",
-    percent: 45,
-  },
-  {
-    type: "investments",
-    color: "#f9c74f",
-    percent: 45,
-  },
-  {
-    type: "spending",
-    color: "#f9c74f",
-    percent: 45,
-  },
-];
+import { getLabels } from "../helper/helper";
+
 const Labels = () => {
   // console.log(api.useGetCategoriesQuery());
-  const { data, isFetching, isSuccess, isError } = api.useGetCategoriesQuery();
+  const { data, isFetching, isSuccess, isError } = api.useGetLabelsQuery();
+  let Transaction;
+
+  if (isFetching) {
+    Transaction = <div>Fetching</div>;
+  } else if (isSuccess) {
+    Transaction = getLabels(data, "type").map((v, i) => (
+      <Labelcomponent key={i} data={v} />
+    ));
+  } else if (isError) {
+    Transaction = <div>Error</div>;
+  }
+
   console.log(data);
 
-  return (
-    <>
-      {obj.map((v, i) => (
-        <Labelcomponent key={i} data={v} />
-      ))}
-    </>
-  );
+  return <>{Transaction}</>;
 };
 export default Labels;
 function Labelcomponent({ data }) {
@@ -36,12 +27,12 @@ function Labelcomponent({ data }) {
 
   return (
     <>
-      <div className="flex">
+      <div className="flex gap-3">
         <div className="flex gap-2">
           <div className="bg-[{data.color}]"></div>
-          <h3>{data.type}</h3>
+          <h3>{data.type ?? ""}</h3>
         </div>
-        <h3>{data.percent}</h3>
+        <h3>{Math.round(data.percent) ?? ""}</h3>
       </div>
     </>
   );
